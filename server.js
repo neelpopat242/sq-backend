@@ -3,6 +3,7 @@ const app = require ("./app")
 const connectDatabase = require("./config/database")
 const dotenv = require("dotenv")
 dotenv.config({path:"./etc/secrets/.env"})
+console.log(process.env.DB_URL)
 
 app.get('/', function(req, res){
   res.send("Hello from the root application URL");
