@@ -1,5 +1,5 @@
-const mongoose = require("mongoose")
-const validator = require("validator")
+const mongoose = require("mongoose");
+const validator = require("validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
@@ -23,21 +23,19 @@ const userSchema = new mongoose.Schema({
     minLength: [8, "Password should be greater than 8 characters"],
     select: false,
   },
-
-  matches :[
+  matches: [
     {
-    email : String,
-    name : String
-  }
-    
+      email: String,
+      name: String,
+    },
   ],
-  leftSwipe :[
+  leftSwipe: [
     {
-    email : String}
-    
+      email: String,
+    },
   ],
   avatar: {
-      type: String,
+    type: String,
   },
   role: {
     type: String,
@@ -47,39 +45,37 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  university :{
-    type:String,
+  university: {
+    type: String,
   },
-  bio :{
-    type:String,
+  bio: {
+    type: String,
   },
-  linkedinURL :{
-    type:String,
+  linkedinURL: {
+    type: String,
   },
-  twitterURL :{
-    type:String,
+  twitterURL: {
+    type: String,
   },
-  area : {
-    type:String,
+  area: {
+    type: String,
   },
-  experience : {
-    type:Number
+  experience: {
+    type: Number,
   },
-  
-  projects : [
+
+  projects: [
     {
-      title : String,
-      groupsize : Number,
-      link:String,
-      description : String,
-      repo:String,
-      mentor:String,
-      duration:Number,
-      frameworks : String,
-      
-    }
-  ]
-,
+      title: String,
+      groupsize: Number,
+      link: String,
+      description: String,
+      repo: String,
+      mentor: String,
+      duration: Number,
+      frameworks: String,
+    },
+  ],
   resetPasswordToken: String,
   resetPasswordExpire: Date,
 });
@@ -95,7 +91,7 @@ userSchema.pre("save", async function (next) {
 // JWT TOKEN
 userSchema.methods.getJWTToken = function () {
   return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRE
+    expiresIn: process.env.JWT_EXPIRE,
   });
 };
 
@@ -121,5 +117,4 @@ userSchema.methods.getResetPasswordToken = function () {
   return resetToken;
 };
 
-
-module.exports = mongoose.model("User", userSchema)
+module.exports = mongoose.model("User", userSchema);

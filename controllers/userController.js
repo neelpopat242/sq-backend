@@ -4,7 +4,9 @@ const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const User = require("../models/userModel");
 const Message = require("../models/messageModel");
 const sendToken = require("../utils/jwtToken");
+const projectModel = require("../models/projectModel");
 
+const { v4: uuidv4 } = require('uuid');
 //Register User
 
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
@@ -17,6 +19,33 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
   const token = user.getJWTToken();
   sendToken(user, 201, res);
 });
+
+exports.enterProject = catchAsyncErrors(async (req, res, next) => {
+  const { title, groupsize,link, description, repo, mentor, duration, framework, userId } = req.body;
+  const data = {
+    projectId: uuidv4(),
+    title,
+    groupsize,
+    link,
+    description,
+    repo,
+    mentor,
+    duration,
+    framework,
+    userId,
+  }
+  const user = await projectModel.create(
+    data
+  );
+  // const token = user.getJWTToken();
+  // sendToken(user, 201, res);
+  return res.json({
+    user,
+    status: "success",
+    message: "data chala gaya"
+  })
+});
+
 
 //UserDetails put request 
 exports.userDetails = catchAsyncErrors(async (req, res, next) => {
