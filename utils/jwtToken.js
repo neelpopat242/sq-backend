@@ -1,3 +1,4 @@
+
 const sendToken = (user, statusCode, res) => {
     const token = user.getJWTToken();
     const email = user.email

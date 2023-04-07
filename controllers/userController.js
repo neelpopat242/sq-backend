@@ -1,4 +1,5 @@
-const ErrorHander = require("../utils/errorhander");
+const ErrorHander = require("../utils/errorhandler");
+
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const User = require("../models/userModel");
 const Message = require("../models/messageModel");
@@ -12,13 +13,7 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
     name,
     email,
     password,
-    // avatar: {
-    //   public_id: "sample user",
-    //   url: "sample url",
-    // },
-    
   });
-
   const token = user.getJWTToken();
   sendToken(user, 201, res);
 });
@@ -26,14 +21,8 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
 //UserDetails put request 
 exports.userDetails = catchAsyncErrors(async (req, res, next) => {
   const { email, token } = req.body;
-  console.log("first");
-  console.log(email, token, req, "hello");
   const user =  await User.findOne({ email })
-  
-  // if(!email || !password){
-    //   return next(new ErrorHander("Please Enter Email and Password",400))
-    
-    
+
     const update = req.body;
     const opts = { new: true };
     
@@ -108,9 +97,7 @@ exports.addMatch =  catchAsyncErrors(async (req, res, next) => {
 
 const {email, matchedEmail} = req.body
 const query = {email : email}
-// console.log(matchedEmail)
 const matchedUser = await User.findOne({email : matchedEmail})
-// console.log(matchedUser.name)
 
 const updateMatch = {
   $push : {matches : {email: matchedEmail, name:matchedUser.name }}, // adding name to display on dashboard- matches list 
@@ -129,8 +116,6 @@ res.json(user)
 
 exports.getMatchedUser =  catchAsyncErrors(async (req, res, next) => {
   const emails = JSON.parse(req.query.emails)
-  // console.log(req.query.emails)
-  // console.log(emails)
   
   const pipeline =
   [
@@ -145,7 +130,6 @@ exports.getMatchedUser =  catchAsyncErrors(async (req, res, next) => {
 
 
 const foundUsers = await User.aggregate(pipeline)
-// console.log(foundUsers)
 res.json(foundUsers)
   
 })
@@ -155,8 +139,6 @@ exports.leftSwipe=  catchAsyncErrors(async (req, res, next) => {
 
   const {email, leftSwipeEmail} = req.body
   const query = {email : email}
-  console.log("email", email)
-  console.log(leftSwipeEmail)
   const updateMatch = {
     $push : {leftSwipe : {email: leftSwipeEmail}},
   
@@ -205,8 +187,6 @@ exports.addMessage=  catchAsyncErrors(async (req, res, next) => {
 //put image in database
   exports.getimage = catchAsyncErrors(async (req, res, next) => {
     const { email, token } = req.body;
-    console.log("first");
-    console.log(email, token, req, "hello");
     const user =  await User.findOne({ email })
     
     // if(!email || !password){

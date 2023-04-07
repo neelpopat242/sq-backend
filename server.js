@@ -2,13 +2,13 @@
 const app = require ("./app")
 const connectDatabase = require("./config/database")
 const dotenv = require("dotenv")
-dotenv.config({path:"/etc/secrets/.env"})
+dotenv.config({path:"./etc/secrets/.env"})
 
 app.get('/', function(req, res){
   res.send("Hello from the root application URL");
 });
 
 app.listen(process.env.PORT, (req,res) => {
- connectDatabase()
+    connectDatabase()
     console.log(`Server is working on http://localhost:${process.env.PORT}`);
   });
