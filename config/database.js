@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+dotenv.config({path:"./etc/secrets/.env"})
 const connectDatabase = async () => {
   try {
     await mongoose.connect(process.env.DB_URL);
