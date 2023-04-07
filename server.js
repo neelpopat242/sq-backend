@@ -1,7 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
-require("dotenv").config();
+require('dotenv').config({path:'./etc/secrets/.env'})
+console.log(process.env.URI);
 const Product = require("./models/productModel");
 const port = process.env.PORT || 3000;
 app.use(express.json());
