@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
-dotenv.config({path:"./etc/secrets/.env"})
+require('dotenv').config({path:"./etc/secrets/.env"})
+console.log(process.env.DB_URL, "URL in db.js")
 const connectDatabase = async () => {
   try {
     await mongoose.connect(process.env.DB_URL);
