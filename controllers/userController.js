@@ -15,44 +15,11 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
     email,
     password,
   });
+  console.log(user._id);
   const token = createToken(email);
   res.status(200).json({
     success: true,
     token,
-  });
-});
-
-exports.enterProject = catchAsyncErrors(async (req, res, next) => {
-  const {
-    title,
-    groupsize,
-    link,
-    description,
-    repo,
-    mentor,
-    duration,
-    framework,
-    userId,
-  } = req.body;
-  const data = {
-    projectId: uuidv4(),
-    title,
-    groupsize,
-    link,
-    description,
-    repo,
-    mentor,
-    duration,
-    framework,
-    userId,
-  };
-  const user = await projectModel.create(data);
-  // const token = user.getJWTToken();
-  // sendToken(user, 201, res);
-  return res.json({
-    user,
-    status: "success",
-    message: "data chala gaya",
   });
 });
 
