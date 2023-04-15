@@ -20,20 +20,23 @@ const {
   deleteTodo,
   updateTodo,
 } = require("../controllers/todoController");
+
+const { isAuthenticatedUser } = require("../middleware/auth");
+
 const router = express.Router();
-router.route("/register").post(registerUser);
-router.route("/login").post(loginUser);
-router.route("/logout").post(logout);
-router.route("/register").put(userDetails);
-router.route("/userinfo").get(userInfo);
-router.route("/addmatch").put(addMatch);
-router.route("/getallusers").get(getAllUsers);
-router.route("/leftswipe").put(leftSwipe);
-router.route("/message").post(addMessage);
-router.route("/message").get(getMessage);
-router.route("/enterProject").post(enterProject);
-router.route("/matchedUser").get(getMatchedUser);
-router.route("/image").put(getimage);
+router.post("/register", registerUser);
+router.post("/login", loginUser);
+router.post("/logout", logout);
+router.put("/register", isAuthenticatedUser, userDetails);
+router.get("/userinfo", isAuthenticatedUser, userInfo);
+router.put("/addmatch", isAuthenticatedUser, addMatch);
+router.get("/getallusers", isAuthenticatedUser, getAllUsers);
+router.put("/leftswipe", isAuthenticatedUser, leftSwipe);
+router.post("/message", isAuthenticatedUser, addMessage);
+router.get("/message", isAuthenticatedUser, getMessage);
+// router.post("/enterProject", isAuthenticatedUser, enterProject);
+router.get("/matchedUser", isAuthenticatedUser, getMatchedUser);
+router.put("/image", isAuthenticatedUser, getimage);
 
 // Todo Routes Temporary
 router.route("/createTodo").post(createTodo);
