@@ -15,7 +15,6 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
     email,
     password,
   });
-  console.log(user._id);
   const token = createToken(email);
   res.status(200).json({
     success: true,

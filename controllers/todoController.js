@@ -23,7 +23,6 @@ exports.createTodo = async (req, res) => {
 exports.getTodos = async (req, res) => {
   try {
     const todo_response = await Todo.find({});
-    console.log(todo_response);
     res.status(200).json({
       success: true,
       todo_response,
